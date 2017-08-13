@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+{% load staticfiles %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
+    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/user.css">
+    <link rel="stylesheet" href="assets/css/Article-Clean.css">
+    <link rel="stylesheet" href="assets/css/Article-List.css">
+    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
+    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
+</head>
+
+<body>
+    <nav class="navbar navbar-default" style="background-color:rgb(153,57,51);color:rgb(227,222,222);">
+        <div class="container">
+            <div class="navbar-header"><a class="navbar-brand navbar-link" href="{% url 'index' %}" style="color:rgb(254,250,250);">BloodShare</a>
+                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+            </div>
+            <div class="collapse navbar-collapse" id="navcol-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active" role="presentation"><a href="{% url 'add_alert' %}" style="color:#ffffff;background-color:transparent;">Blood Request</a></li>
+                    <li role="presentation"><a href="{% url 'alerts' %}" style="color:#ffffff;">Timeline </a></li>
+                    <li role="presentation"><a href="#" style="color:#ffffff;">Profile </a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% block content %}
+    {% endblock %}
+    <footer class="site-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6" style="background-color:#ffffff;">
+                    <h5>BloodShare © 2017</h5></div>
+                <div class="col-sm-6 social-icons" style="background-color:#993933;"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"><i class="fa fa-twitter"></i></a><a href="#"><i class="fa fa-instagram"></i></a></div>
+            </div>
+        </div>
+    </footer>
+</div>
+<div class="article-clean"></div>
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/bootstrap/js/bootstrap.min.js"></script>
+</body>
+
+</html>

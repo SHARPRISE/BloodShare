@@ -16,10 +16,14 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 
-from blood_alert import views
+from main import views as main_views
+from blood_alert import views as alert_views
+
+
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^add_alert$', views.add_alert, name='add_alert'),
-    url(r'^alerts$', views.alerts, name='alerts'),
+    url(r'^$', main_views.index, name='index'),
+    url(r'^add_alert$', alert_views.add_alert, name='add_alert'),
+    url(r'^alerts$', alert_views.alerts, name='alerts'),
 ]

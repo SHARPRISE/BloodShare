@@ -8,7 +8,7 @@ from datetime import datetime
 # Create your views here.
 
 def alerts(request):
-    alert = Alert.objects.all()
+    alert = Alert.objects.all().order_by('date_time_posted').reverse()
     return render(
         request,
         'blood_alert/alerts.html',

@@ -1,37 +1,5 @@
-{% load staticfiles %}
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page</title>
-    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora">
-    <link rel="stylesheet" href="assets/fonts/font-awesome.min.css">
-    <link rel="stylesheet" href="assets/css/user.css">
-    <link rel="stylesheet" href="assets/css/Article-Clean.css">
-    <link rel="stylesheet" href="assets/css/Article-List.css">
-    <link rel="stylesheet" href="assets/css/Contact-Form-Clean.css">
-    <link rel="stylesheet" href="assets/css/Login-Form-Clean.css">
-</head>
-
-<body>
-    <nav class="navbar navbar-default" style="background-color:rgb(153,57,51);color:rgb(227,222,222);">
-        <div class="container">
-            <div class="navbar-header"><a class="navbar-brand navbar-link" href="#" style="color:rgb(254,250,250);">BloodShare</a>
-                <button class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-            </div>
-            <div class="collapse navbar-collapse" id="navcol-1">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active" role="presentation"><a href="#" style="color:#ffffff;background-color:rgb(34, 34, 34);">Blood Request</a></li>
-                    <li role="presentation"><a href="#" style="color:#ffffff;">Timeline </a></li>
-                    <li role="presentation"><a href="#" style="color:#ffffff;">Profile </a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+{% extends '../homepage/base.html' %}
+{% block content %}
     <div class="contact-clean" style="background-color:rgb(34, 34, 34);">
         <form method="post" style="height:596px;" action="{% url 'add_alert' %}">
             <h2 class="text-center">Request Blood</h2>
@@ -40,8 +8,4 @@
             <button class="btn btn-primary" type="submit"> Send Alert </button>
         </form>
     </div>
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
-</body>
-
-</html>
+{% endblock %}
