@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'blood_alert',
     # Disable Django's own staticfiles handling in favour of WhiteNoise, for
     # greater consistency between gunicorn and `./manage.py runserver`. See:
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
@@ -57,7 +58,7 @@ ROOT_URLCONF = 'bloodshare.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -77,12 +78,8 @@ WSGI_APPLICATION = 'bloodshare.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/1.11/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+import dj_database_url
+DATABASES ={'default':dj_database_url.config(default='postgres://qhexidxndsgsrf:7407c617629dfb09b696670d5670b5be776e19022153d41b16b3c94b344051e5@ec2-107-20-195-181.compute-1.amazonaws.com:5432/d3eknvmqrbjjdb')}
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -107,9 +104,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
-
-# Change 'default' database configuration with $DATABASE_URL.
-DATABASES['default'] = dj_database_url.config(conn_max_age=500)
 
 # Honor the 'X-Forwarded-Proto' header for request.is_secure()
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
