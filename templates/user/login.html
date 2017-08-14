@@ -1,6 +1,6 @@
 {% extends '../homepage/base.html' %}
 {% block content %}
-    <div class="login-clean" style="background-color:rgb(34,34,34);">
+    <div class="login-clean">
         <form method="post", action='{% url 'login' %}'>
             <h2 class="sr-only">Login</h2>
             <div class="illustration"><img src="assets/img/Artboard 1.png" style="width:120px;"></div>
@@ -10,4 +10,5 @@
                 <button class="btn btn-primary btn-block" type="submit" style="background-color:#993933;">Log In</button>
             </div><a href="#" class="forgot">Forgot your email or password?</a></form>
     </div>
+    <!--style="background-color:rgb(34,34,34);"-->
 {% endblock %}

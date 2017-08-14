@@ -1,6 +1,6 @@
 {% extends '../homepage/base.html' %}
 {% block content %}
-    <div class="contact-clean" style="background-color:rgb(34, 34, 34);">
+    <div class="contact-clean">
         <form method="post" style="height:596px;" action="{% url 'add_alert' %}">
             <h2 class="text-center">Request Blood</h2>
             {% csrf_token %}
@@ -8,4 +8,5 @@
             <button class="btn btn-primary" type="submit"> Send Alert </button>
         </form>
     </div>
+    <!--style="background-color:rgb(34, 34, 34);"-->
 {% endblock %}
