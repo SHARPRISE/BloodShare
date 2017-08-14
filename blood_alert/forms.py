@@ -16,6 +16,18 @@ class AddAlertForm(forms.ModelForm):
         location = forms.CharField(label='Enter your location')
         message = forms.CharField(label='Enter a message for details (optional)')
 
+class AddAlertOnlineForm(forms.ModelForm):
+    class Meta:
+        model = Alert
+        fields = ('location', 'message', 'blood_type')
+        location = forms.CharField(label='Enter your location')
+        message = forms.CharField(label='Enter a message for details (optional)')
+        blood_type = forms.MultipleChoiceField(
+                    choices=BLOOD_TYPES,
+                    label='Blood type needed',
+                    required=True
+                    )
+
 class ResolvedAlertForm(forms.ModelForm):
     class Meta:
         model = Alert

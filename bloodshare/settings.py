@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'blood_alert',
     'main',
+    'people',
     # Disable Django's own staticfiles handling in favour of WhiteNoise, for
     # greater consistency between gunicorn and `./manage.py runserver`. See:
     # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
@@ -72,6 +73,8 @@ TEMPLATES = [
         },
     },
 ]
+
+AUTH_USER_MODEL = 'people.User'
 
 WSGI_APPLICATION = 'bloodshare.wsgi.application'
 

@@ -18,12 +18,14 @@ from django.contrib import admin
 
 from main import views as main_views
 from blood_alert import views as alert_views
-
-
+from people import views as people_views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', main_views.index, name='index'),
     url(r'^add_alert$', alert_views.add_alert, name='add_alert'),
     url(r'^alerts$', alert_views.alerts, name='alerts'),
+    url(r'^register$', people_views.register, name='register'),
+    url(r'^login$', people_views.user_login, name ='login'),
+    url(r'^logout$', people_views.user_logout, name='logout'),
 ]
