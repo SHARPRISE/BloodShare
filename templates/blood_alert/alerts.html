@@ -10,7 +10,7 @@
               {% for alert in alerts %}
                 <div class="col-md-4 col-sm-6 item" style="height:100px;">
                     <a href="#"></a>
-                    <h3 class="name">{{ alert.get_blood_type_display }} blood needed</h3>
+                    <h3 class="name">{{ alert.get_blood_type_display }} blood needed / {{ alert.compatible_donor }} </h3>
                     <p class="description">by {{ alert.name }} in {{ alert.location }}. Please call at {{ alert.phone }} <br /> posted on {{ alert.date_time_posted }} </p>
                     <a href="#" class="action"><i class="glyphicon glyphicon-circle-arrow-right"></i>Click for more details</a></div>
               {% endfor %}
