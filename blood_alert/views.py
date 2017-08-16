@@ -11,7 +11,10 @@ def alerts(request):
     return render(
         request,
         'blood_alert/alerts.html',
-        {'alerts': alert},
+        {
+         'alerts': alert,
+         'title': "Alerts |"
+         },
     )
 
 def add_alert(request, template='blood_alert/add_alert.html'):
@@ -39,6 +42,7 @@ def add_alert(request, template='blood_alert/add_alert.html'):
             new_alert.save()
             return redirect('alerts')
     context = {
-        'form': form
+        'form': form,
+        'title': "Add Alert |"
     }
     return render(request, template, context)

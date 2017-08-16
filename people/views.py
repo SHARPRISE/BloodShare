@@ -26,7 +26,7 @@ def register(request, template='user/register.html'):
             return HttpResponse(success)
     else:
         form = RegisterForm()
-    return render(request, template, {'form': form})
+    return render(request, template, {'form': form, 'title': "Register |"})
 
 def user_login(request, template='user/login.html'):
     if request.user.is_authenticated():
@@ -47,7 +47,7 @@ def user_login(request, template='user/login.html'):
     else:
         pass
     form = LoginForm()
-    return render(request, template, {'form': form})
+    return render(request, template, {'form': form, 'title': "Login |"})
 
 def user_logout(request):
     logout(request)
