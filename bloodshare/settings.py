@@ -37,11 +37,11 @@ INSTALLED_APPS = [
     'blood_alert',
     'main',
     'people',
-    # Disable Django's own staticfiles handling in favour of WhiteNoise, for
-    # greater consistency between gunicorn and `./manage.py runserver`. See:
-    # http://whitenoise.evans.io/en/stable/django.html#using-whitenoise-in-development
+    'api.apps.ApiConfig',
     'whitenoise.runserver_nostatic',
     'django.contrib.staticfiles',
+    #3rd party
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -129,3 +129,7 @@ STATICFILES_DIRS = [
 # Simplified static file serving.
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+REST_FRAMEWORK = {
+    'PAGE_SIZE': 15
+}

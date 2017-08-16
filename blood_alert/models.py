@@ -1,6 +1,5 @@
 from django.db import models
-from datetime import datetime
-from django.core.urlresolvers import reverse
+from people.models import User
 
 BLOOD_TYPES = (
     ('1', 'A+'),
@@ -15,11 +14,11 @@ BLOOD_TYPES = (
 
 class Alert(models.Model):
     name = models.CharField(max_length=255, default='Name')
-    blood_type = models.CharField(max_length=3, choices=BLOOD_TYPES, help_text='Your Blood Type')
+    blood_type = models.CharField(max_length=3, choices=BLOOD_TYPES)
     phone = models.CharField(max_length=255)
-    location = models.CharField(max_length=255, help_text='Your location/address')
+    location = models.CharField(max_length=255, default='Your location/address')
     date_time_posted = models.DateTimeField(auto_now_add=True, verbose_name='Alert posted on')
-    message = models.TextField(max_length=255, help_text='A message')
+    message = models.TextField(max_length=255, default='Add details in your message')
     resolved = models.BooleanField(default=False)
 
     def compatible_donor(self):

@@ -1,9 +1,17 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
-from datetime import datetime
-
-from blood_alert.models import BLOOD_TYPES
 # Create your models here.
+
+BLOOD_TYPES = (
+    ('1', 'A+'),
+    ('2', 'A-'),
+    ('3', 'B+'),
+    ('4', 'B-'),
+    ('5', 'O+'),
+    ('6', 'O-'),
+    ('7', 'AB+'),
+    ('8', 'AB-')
+)
 
 class User(AbstractUser):
     name = models.CharField(max_length=255)

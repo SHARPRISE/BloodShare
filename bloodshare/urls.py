@@ -21,6 +21,7 @@ from blood_alert import views as alert_views
 from people import views as people_views
 
 urlpatterns = [
+    url(r'^', include('api.urls')),
     url(r'^admin/', admin.site.urls),
     url(r'^$', main_views.index, name='index'),
     url(r'^add_alert$', alert_views.add_alert, name='add_alert'),

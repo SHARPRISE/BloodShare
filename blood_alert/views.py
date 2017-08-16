@@ -4,7 +4,6 @@ from .models import Alert
 from .forms import AddAlertForm, AddAlertOnlineForm, ResolvedAlertForm
 
 from datetime import datetime
-
 # Create your views here.
 
 def alerts(request):
