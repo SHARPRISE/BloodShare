@@ -1,13 +1,27 @@
 from django.db import models
 
 from blood_alert.models import Alert
-from pygments.lexers import get_all_lexers
-from pygments.styles import get_all_styles
 
 # Create your models here.
-LEXERS = [item for item in get_all_lexers() if item[1]]
-LANGUAGE_CHOICES = sorted([(item[1][0], item[0]) for item in LEXERS])
-STYLE_CHOICES = sorted((item, item) for item in get_all_styles())
 
-class Api(models.Model):
-    title = models.CharField(max_length=100, blank=True, default='')
+class Centres(models.Model):
+    lieu = models.CharField(max_length=255)
+    telephone = models.CharField(max_length=255)
+    type = models.CharField(max_length=100)
+    lat = models.CharField(max_length=255)
+    long = models.CharField(max_length=255)
+    qteDisponible = models.IntegerField()
+
+class Articles(models.Model):
+    title = models.CharField(max_length=255)
+    contenu = models.TextField()
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Date posted')
+    photo = models.ImageField(blank=True)
+
+class Statistique(models.Model):
+    critere = models.CharField(max_length=255)
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Date posted')
+    pourcentage = models.IntegerField()
+
+    def get_pourcentage(self):
+        return self.pourcentage + "%"

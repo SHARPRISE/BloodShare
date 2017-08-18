@@ -6,7 +6,7 @@ class AddAlertForm(forms.ModelForm):
     class Meta:
         model = Alert
         fields = ('name', 'blood_type', 'phone', 'location', 'message')
-        name = forms.CharField(label='Enter your name', required=True)
+        name = forms.CharField(label='Enter your name', required=True, widget=forms.TextInput(attrs={'class': 'form-control'})),
         blood_type = forms.MultipleChoiceField(
             choices=BLOOD_TYPES,
             label='Choose your blood type',

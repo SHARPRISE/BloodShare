@@ -19,6 +19,13 @@ class LoginForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'password', 'blood_type')
-        username = forms.CharField(label='Enter your username', required=True)
-        password = forms.CharField(label='Enter your password', widget=forms.PasswordInput(), required=True)
+        username = forms.CharField(label="Your username", widget=forms.TextInput({
+                                       'class': 'form-control',
+                                       'placeholder': 'User name'}))
+        password = forms.CharField(label="Password",
+                widget=forms.PasswordInput({
+                'type': 'password',
+                'class':'form-control',
+                'name': 'password',
+                'placeholder':'Password'}))
         blood_type = forms.MultipleChoiceField(choices=BLOOD_TYPES, label='Choose your Blood Type', required=True)

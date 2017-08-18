@@ -155,3 +155,90 @@ section.testimonials {
   }
 }
 
+.login-dark {
+  height:1000px;
+  background:#475d62 url(../img/pap-haiti.jpg);
+  background-size:cover;
+  position:relative;
+}
+
+.login-dark form {
+  max-width:320px;
+  width:90%;
+  background-color:#1e2833;
+  padding:40px;
+  border-radius:4px;
+  transform:translate(-50%, -50%);
+  position:absolute;
+  top:50%;
+  left:50%;
+  color:#fff;
+  box-shadow:3px 3px 4px rgba(0,0,0,0.2);
+}
+
+.login-dark .illustration {
+  text-align:center;
+  padding:15px 0 20px;
+  font-size:100px;
+  color:#2980ef;
+}
+
+.form-group {
+  margin-bottom:15px;
+}
+
+.login-dark form .form-control {
+  background:none;
+  border:none;
+  border-bottom:1px solid #434a52;
+  border-radius:0;
+  box-shadow:none;
+  outline:none;
+  color:inherit;
+}
+
+.form-control {
+  display:block;
+  width:100%;
+  height:45px;
+  padding:10px 15px;
+  font-size:15px;
+  line-height:1.42857143;
+  color:#464545;
+  background-color:#ffffff;
+  background-image:none;
+  border:1px solid #f1f1f1;
+  border-radius:4px;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+  box-shadow:inset 0 1px 1px rgba(0,0,0,0.075);
+  -webkit-transition:border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+  -o-transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+  transition:border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+
+.form-control:focus, input:focus, textarea:focus {
+  -webkit-box-shadow:none;
+  box-shadow:none;
+}
+
+.form-control:focus {
+  border-color:#ffffff;
+  outline:0;
+  -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,255,255,0.6);
+  box-shadow:inset 0 1px 1px rgba(0,0,0,0.075),0 0 8px rgba(255,255,255,0.6);
+}
+
+.form-control, input, textarea {
+  border:2px hidden transparent;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+}
+
+button, input, optgroup, select, textarea {
+  color:inherit;
+  font:inherit;
+  margin:0;
+}
+
+
