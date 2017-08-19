@@ -17,6 +17,9 @@ class User(AbstractUser):
     name = models.CharField(max_length=255)
     blood_type = models.CharField(max_length=3, choices=BLOOD_TYPES, help_text='Your Blood Type')
     phone = models.CharField(max_length=255)
+    adresse = models.CharField(max_length=255, null=True)
+    qteSang = models.IntegerField(null=True)
+    photo_url = models.CharField(max_length=500, null=True)
 
     REQUIRED_FIELDS = ['email', 'name', 'blood_type', 'phone']
 
