@@ -42,5 +42,6 @@ class Planifier(models.Model):
     qtePrevue = models.IntegerField()
     date = models.DateTimeField(auto_now_add=True, verbose_name='Date posted')
     etat = models.CharField(max_length=100)
+    centre = models.OneToOneField(Centres, null=True)
     user = models.OneToOneField(User)
 

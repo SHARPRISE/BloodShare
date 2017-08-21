@@ -36,12 +36,30 @@ class StatistiqueSerializer(serializers.ModelSerializer):
 
 
 class DemandeSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+
     class Meta:
         model = Demande
         fields = ('id', 'text', 'qte', 'date', 'etat', 'user')
 
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        demande = Demande.objects.create(**validated_data)
+        User.objects.create(demande=demande, **user_data)
+        return demande
+
 
 class PlanifierSerializer(serializers.ModelSerializer):
+    user = UserSerializer(many=False)
+    centre = CentresSerializer(many=False)
+
     class Meta:
         model = Planifier
-        fields = ('id', 'qtePrevue', 'date', 'etat', 'user')
+        fields = ('id', 'qtePrevue', 'date', 'etat', 'centre', 'user')
+
+    def create(self, validated_data):
+        user_data = validated_data.pop('user')
+        centre_data = validated_data.pop('centre')
+        planifier = Planifier.objects.create(**validated_data)
+        User.objects.create(planifier=planifier, **user_data, **centre_data)
+        return planifier
