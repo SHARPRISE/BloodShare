@@ -1,13 +1,22 @@
-from rest_framework import status, renderers
+from rest_framework import status, renderers, generics, permissions
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.reverse import reverse
+from rest_framework.views import APIView
 from blood_alert.models import Alert
 from .models import Centres, Articles, Statistique, Demande, Planifier
 from people.models import User
 from api.serializers import AlertSerializer, CentresSerializer, ArticlesSerializer, StatistiqueSerializer, UserSerializer, DemandeSerializer, PlanifierSerializer
 # Create your views here.
 
+class UserList(generics.ListAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 @api_view(['GET', 'POST'])
 def user_list(request, format=None):
@@ -23,43 +32,41 @@ def user_list(request, format=None):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-
-@api_view(['GET', 'POST'])
-def alert_list(request, format=None):
-    "List all alerts, or create a new one"
-    if request.method == 'GET':
+class AlertList(APIView):
+    def get(self, request, format=None):
         alerts = Alert.objects.all()
         serializer = AlertSerializer(alerts, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+
+    def post(self, request, format=None):
         serializer = AlertSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'POST'])
-def centre_list(request, format=None):
-    "List all centers, or create a new one"
-    if request.method == 'GET':
+
+class CentreList(APIView):
+    def get(self, request, format=None):
         centres = Centres.objects.all()
         serializer = CentresSerializer(centres, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+
+    def post(self, request, format=None):
         serializer = CentresSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'POST'])
-def article_list(request, format=None):
-    "List all articles, or create a new one"
-    if request.method == 'GET':
+
+class ArticleList(APIView):
+    def get(self, request, format=None):
         articles = Articles.objects.all()
         serializer = ArticlesSerializer(articles, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+
+    def post(self, request, format=None):
         serializer = ArticlesSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -67,214 +74,216 @@ def article_list(request, format=None):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
-@api_view(['GET', 'POST'])
-def demande_list(request, format=None):
-    "List all alerts, or create a new one"
-    if request.method == 'GET':
+class DemandeList(APIView):
+    def get(self, request, format=None):
         demandes = Demande.objects.all()
         serializer = DemandeSerializer(demandes, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+
+    def post(self, request, format=None):
         serializer = DemandeSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-@api_view(['GET', 'POST'])
-def planifier_list(request, format=None):
-    "List all alerts, or create a new one"
-    if request.method == 'GET':
+
+class PlanifierList(APIView):
+    def get(self, request, format=None):
         planifiers = Planifier.objects.all()
         serializer = PlanifierSerializer(planifiers, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+
+    def post(self, request, format=None):
         serializer = PlanifierSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
 
-@api_view(['GET', 'POST'])
-def statistique_list(request, format=None):
-    "List all statistiques, or create a new one"
-    if request.method == 'GET':
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
+
+
+class StatistiqueList(APIView):
+    def get(self,request, format=None):
         statistiques = Statistique.objects.all()
         serializer = StatistiqueSerializer(statistiques, many=True)
         return Response(serializer.data)
-    elif request.method == 'POST':
+
+    def post(self, request, format=None):
         serializer = StatistiqueSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def user_detail(request, pk, format=None):
-    "Retrieve, update or delete an alert"
-    try:
-        user = User.objects.get(pk=pk)
-    except User.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-    elif request.method == 'GET':
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = UserSerializer(user, data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
+
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def alert_detail(request, pk, format=None):
-    "Retrieve, update or delete an alert"
-    try:
-        alert = Alert.objects.get(pk=pk)
-    except Alert.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
+class AlertDetail(APIView):
+    def get_object(self, pk):
+        try:
+            alert = Alert.objects.get(pk=pk)
+        except Alert.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, pk, format=None):
+        alert = Alert.objects.get(pk)
         serializer = AlertSerializer(alert)
         return Response(serializer.data)
-    elif request.method == 'GET':
-        serializer = AlertSerializer(alert)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
+
+    def put(self, request, pk, format=None):
+        alert = Alert.objects.get(pk)
         serializer = AlertSerializer(alert, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
+
+    def delete(self, request, pk, format=None):
+        alert = Alert.objects.get(pk)
         alert.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def centres_detail(request, pk, format=None):
-    "Retrieve, update or delete an alert"
-    try:
-        centres = Centres.objects.get(pk=pk)
-    except Centres.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
-        serializer = AlertSerializer(centres)
+
+class CentresDetail(APIView):
+    def get_object(self, pk):
+        try:
+            centres = Centres.objects.get(pk=pk)
+        except Centres.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, pk, format=None):
+        centre = Centres.objects.get(pk)
+        serializer = CentresSerializer(centre)
         return Response(serializer.data)
-    elif request.method == 'GET':
-        serializer = AlertSerializer(centres)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = AlertSerializer(centres, data=request.data)
+
+    def put(self, request, pk, format=None):
+        centre = Centres.objects.get(pk)
+        serializer = CentresSerializer(centre, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
-        centres.delete()
+
+    def delete(self, request, pk, format=None):
+        centre = Centres.objects.get(pk)
+        centre.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def article_detail(request, pk, format=None):
-    "Retrieve, update or delete an alert"
-    try:
-        article = Articles.objects.get(pk=pk)
-    except Articles.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
-        serializer = AlertSerializer(article)
+
+class ArticleDetail(APIView):
+    def get_object(self, pk):
+        try:
+            articles = Articles.objects.get(pk=pk)
+        except Articles.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, pk, format=None):
+        article = Articles.objects.get(pk)
+        serializer = ArticlesSerializer(article)
         return Response(serializer.data)
-    elif request.method == 'GET':
-        serializer = AlertSerializer(article)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = AlertSerializer(article, data=request.data)
+
+    def put(self, request, pk, format=None):
+        article = Articles.objects.get(pk)
+        serializer = ArticlesSerializer(article, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
+
+    def delete(self, request, pk, format=None):
+        article = Articles.objects.get(pk)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+class StatistiqueDetail(APIView):
+    def get_object(self, pk):
+        try:
+            statistiques = Statistique.objects.get(pk=pk)
+        except Statistique.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def statistique_detail(request, pk, format=None):
-    "Retrieve, update or delete an alert"
-    try:
-        statistique = Statistique.objects.get(pk=pk)
-    except Statistique.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
-        serializer = AlertSerializer(statistique)
+    def get(self, request, pk, format=None):
+        statistique = Statistique.objects.get(pk)
+        serializer = StatistiqueSerializer(article)
         return Response(serializer.data)
-    elif request.method == 'GET':
-        serializer = AlertSerializer(statistique)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = AlertSerializer(statistique, data=request.data)
+
+    def put(self, request, pk, format=None):
+        statistique = Statistique.objects.get(pk)
+        serializer = StatistiqueSerializer(statistique, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
+
+    def delete(self, request, pk, format=None):
+        statistique = Statistique.objects.get(pk)
         statistique.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def demande_detail(request, pk, format=None):
-    "Retrieve, update or delete an alert"
-    try:
-        demande = Demande.objects.get(pk=pk)
-    except Demande.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
-        serializer = DemandeSerializer(demande)
+class DemandeDetail(APIView):
+    def get_object(self, pk):
+        try:
+            demandes = Demande.objects.get(pk=pk)
+        except Demande.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, pk, format=None):
+        demande = Demande.objects.get(pk)
+        serializer = DemandeSerializer(article)
         return Response(serializer.data)
-    elif request.method == 'GET':
-        serializer = DemandeSerializer(demande)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
+
+    def put(self, request, pk, format=None):
+        demande = Demande.objects.get(pk)
         serializer = DemandeSerializer(demande, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
+
+    def delete(self, request, pk, format=None):
+        demande = Demande.objects.get(pk)
         demande.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-@api_view(['GET', 'PUT', 'DELETE'])
-def planifier_detail(request, pk, format=None):
-    "Retrieve, update or delete an alert"
-    try:
-        planifier = Planifier.objects.get(pk=pk)
-    except Alert.DoesNotExist:
-        return Response(status=status.HTTP_404_NOT_FOUND)
-    if request.method == 'GET':
-        serializer = PlanifierSerializer(planifier)
+class PlanifierDetail(APIView):
+    def get_object(self, pk):
+        try:
+            planifiers = Planifier.objects.get(pk=pk)
+        except Planifier.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+    def get(self, request, pk, format=None):
+        planifier = Planifier.objects.get(pk)
+        serializer = DemandeSerializer(article)
         return Response(serializer.data)
-    elif request.method == 'GET':
-        serializer = PlanifierSerializer(planifier)
-        return Response(serializer.data)
-    elif request.method == 'PUT':
-        serializer = PlanifierSerializer(planifier, data=request.data)
+
+    def put(self, request, pk, format=None):
+        planifier = Planifier.objects.get(pk)
+        serializer = Planifier(planifier, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    elif request.method == 'DELETE':
+
+    def delete(self, request, pk, format=None):
+        planifier = Planifier.objects.get(pk)
         planifier.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 
 @api_view(['GET'])
 def api_root(request, format=None):
@@ -287,5 +296,3 @@ def api_root(request, format=None):
         'planifiers': reverse('planifier-list', request=request, format=format),
         'users': reverse('user-list', request=request, format=format)
     })
-
-

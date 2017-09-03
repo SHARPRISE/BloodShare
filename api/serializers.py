@@ -36,7 +36,7 @@ class StatistiqueSerializer(serializers.ModelSerializer):
 
 
 class DemandeSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
+    user = serializers.ReadOnlyField(source='user.username')
 
     class Meta:
         model = Demande
@@ -50,7 +50,7 @@ class DemandeSerializer(serializers.ModelSerializer):
 
 
 class PlanifierSerializer(serializers.ModelSerializer):
-    user = UserSerializer(many=False)
+    user = serializers.ReadOnlyField(source='user.username')
     centre = CentresSerializer(many=False)
 
     class Meta:
