@@ -133,16 +133,17 @@ class AlertDetail(APIView):
     def get_object(self, pk):
         try:
             alert = Alert.objects.get(pk=pk)
+            return alert
         except Alert.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk, format=None):
-        alert = Alert.objects.get(pk)
+        alert = self.get_object(pk)
         serializer = AlertSerializer(alert)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        alert = Alert.objects.get(pk)
+        alert = self.get_object(pk)
         serializer = AlertSerializer(alert, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -150,7 +151,7 @@ class AlertDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        alert = Alert.objects.get(pk)
+        alert = self.get_object(pk)
         alert.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -159,16 +160,17 @@ class CentresDetail(APIView):
     def get_object(self, pk):
         try:
             centres = Centres.objects.get(pk=pk)
+            return centres
         except Centres.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk, format=None):
-        centre = Centres.objects.get(pk)
+        centre = self.get_object(pk)
         serializer = CentresSerializer(centre)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        centre = Centres.objects.get(pk)
+        centre = self.get_object(pk)
         serializer = CentresSerializer(centre, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -176,7 +178,7 @@ class CentresDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        centre = Centres.objects.get(pk)
+        centre = self.get_object(pk)
         centre.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -185,16 +187,17 @@ class ArticleDetail(APIView):
     def get_object(self, pk):
         try:
             articles = Articles.objects.get(pk=pk)
+            return articles
         except Articles.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk, format=None):
-        article = Articles.objects.get(pk)
+        article = self.get_object(pk)
         serializer = ArticlesSerializer(article)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        article = Articles.objects.get(pk)
+        article = self.get_object(pk)
         serializer = ArticlesSerializer(article, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -202,7 +205,7 @@ class ArticleDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        article = Articles.objects.get(pk)
+        article = self.get_object(pk)
         article.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -210,16 +213,17 @@ class StatistiqueDetail(APIView):
     def get_object(self, pk):
         try:
             statistiques = Statistique.objects.get(pk=pk)
+            return statistiques
         except Statistique.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk, format=None):
-        statistique = Statistique.objects.get(pk)
-        serializer = StatistiqueSerializer(article)
+        statistique = self.get_object(pk)
+        serializer = StatistiqueSerializer(statistique)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        statistique = Statistique.objects.get(pk)
+        statistique = self.get_object(pk)
         serializer = StatistiqueSerializer(statistique, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -227,7 +231,7 @@ class StatistiqueDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        statistique = Statistique.objects.get(pk)
+        statistique = self.get_object(pk)
         statistique.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -236,16 +240,17 @@ class DemandeDetail(APIView):
     def get_object(self, pk):
         try:
             demandes = Demande.objects.get(pk=pk)
+            return demandes
         except Demande.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk, format=None):
-        demande = Demande.objects.get(pk)
-        serializer = DemandeSerializer(article)
+        demande = self.get_object(pk)
+        serializer = DemandeSerializer(demande)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        demande = Demande.objects.get(pk)
+        demande = self.get_object(pk)
         serializer = DemandeSerializer(demande, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -253,7 +258,7 @@ class DemandeDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        demande = Demande.objects.get(pk)
+        demande = self.get_object(pk)
         demande.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
@@ -262,16 +267,17 @@ class PlanifierDetail(APIView):
     def get_object(self, pk):
         try:
             planifiers = Planifier.objects.get(pk=pk)
+            return planifiers
         except Planifier.DoesNotExist:
             return Response(status=status.HTTP_404_NOT_FOUND)
 
     def get(self, request, pk, format=None):
-        planifier = Planifier.objects.get(pk)
+        planifier = self.get_object(pk)
         serializer = DemandeSerializer(article)
         return Response(serializer.data)
 
     def put(self, request, pk, format=None):
-        planifier = Planifier.objects.get(pk)
+        planifier = self.get_object(pk)
         serializer = Planifier(planifier, data=request.data)
         if serializer.is_valid():
             serializer.save()
@@ -279,7 +285,7 @@ class PlanifierDetail(APIView):
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, pk, format=None):
-        planifier = Planifier.objects.get(pk)
+        planifier = self.get_object(pk)
         planifier.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
